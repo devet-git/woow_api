@@ -1,7 +1,8 @@
 import userModel from "../models/userModel.js"
-import controller from "../config/controller.js"
-const userController = Object.create(controller)
 
+import controller from "../config/controller.js"
+
+const userController = Object.create(controller)
 userController.show = async (req, res) => {
    // userModel.get().then(data => res.json(data))
    let { id } = req.params
