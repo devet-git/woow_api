@@ -1,4 +1,5 @@
 const controller = {
+   index: () => { },
    show: () => { },
    store: () => { },
    update: () => { },

@@ -1,5 +1,6 @@
 const model = {
-   select: () => { },
+   getAll: () => { },
+   get: () => { },
    insert: () => { },
    update: () => { },
    delete: () => { },
