@@ -1,7 +1,7 @@
 import db from "./db.js"
 
 const model = {
-   getAll: async (data = {}) => {
+   getAll: async (data) => {
       let sql = `SELECT * FROM ${data.table}`
       try {
          let [rows] = await db.execute(sql)
