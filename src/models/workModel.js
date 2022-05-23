@@ -1,23 +1,15 @@
 import db from "../config/db.js"
 import model from "../config/model.js"
+import { objectString } from "../utils/genString.js"
+
 
 const workModel = Object.create(model)
-// workModel.getAll('users')
-// workModel.getAll = async () => {
-//    let sql = "SELECT * FROM users"
-//    return await db.execute(sql)
-// }
-
-// workModel.get = async (id = null) => {
-//    let sql = "SELECT * FROM users WHERE id = ?"
-//    return await db.execute(sql, [id])
-// }
 
 workModel.store = async (data) => {
-   let sql = "INSERT INTO works(title, description, date) VALUES(?, ?, ?)"
+   let sql = `INSERT INTO works(${objectString(data).genKeys}) VALUES(${objectString(data).genCommas})`
    try {
-      await db.execute(sql, [data.title, data.description, data.date])
-      return "Saved new work"
+      await db.execute(sql, Object.values(data))
+      return "New work was saved"
    } catch (error) {
       throw new Error(error)
    }

@@ -5,17 +5,17 @@ import { responseFormat } from "../utils/format.js"
 
 const authController = Object.create(controller)
 
-authController.phoneNumSignin = async (req, res) => {
+authController.phoneNumSignUp = async (req, res) => {
    try {
-      let response = await authService.phoneNumSignin(req.body)
+      let response = await authService.phoneNumSignUp(req.body)
       res.status(response.statusCode).json({ ...response })
    } catch (error) {
       res.status(500).json(responseFormat.error(500))
    }
 }
-authController.phoneNumLogin = async (req, res) => {
+authController.phoneNumSignIn = async (req, res) => {
    try {
-      let response = await authService.phoneNumLogin(req.body)
+      let response = await authService.phoneNumSignIn(req.body)
       res.status(response.statusCode).json({ ...response })
    } catch (error) {
       res.status(500).json(responseFormat.error(500))

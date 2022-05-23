@@ -1,34 +1,33 @@
-import userModel from "../models/userModel.js"
+import userService from "../services/userService.js"
 import controller from "../config/controller.js"
+import { responseFormat } from "../utils/format.js"
 
 const userController = Object.create(controller)
 
-userController.index = async (req, res) => {
+userController.showAll = async (req, res) => {
    try {
-      let [data] = await userModel.getAll()
-      res.json({ status: 200, success: true, data })
+      let result = await userService.showAll()
+      res.status(result.statusCode).json({ ...result })
    } catch (error) {
-      res.json({ success: false })
+      res.status(500).json(responseFormat.error(500))
    }
 }
 userController.show = async (req, res) => {
-   let { id } = req.params
    try {
-      let [data] = await userModel.get(id)
-      res.json({ status: 200, success: true, data })
+      let { id } = req.params
+      let result = await userService.show({ table: 'works', field: 'id', value: id })
+      res.status(result.statusCode).json({ ...result })
    } catch (error) {
-      res.json({ status: 400, success: false })
+      res.status(500).json(responseFormat.error(500))
    }
 }
 
-userController.store = async (req, res) => {
-   let { username, phoneNum, email } = req.body
-   console.log(username, phoneNum, email);
+userController.createNew = async (req, res) => {
    try {
-      await userModel.insert(username, phoneNum, email)
-      res.json({ status: 200, success: true, data: "1 user added to database" })
+      let result = await userService.createNew(req.body)
+      res.status(result.statusCode).json({ ...result })
    } catch (error) {
-      res.json({ status: 400, success: false })
+      res.status(500).json(responseFormat.error(500))
    }
 }
 
@@ -44,12 +43,12 @@ userController.update = async (req, res) => {
          data: `Updated data of user with ID: ${id}`
       })
    } catch (error) {
-      res.status(400).json({ status: 400, success: false })
+      res.status(500).json(responseFormat.error(500))
    }
 
 }
 
-userController.detroy = async (req, res) => {
+userController.detele = async (req, res) => {
    let { id } = req.params
    try {
       await userModel.detele(id)
@@ -58,7 +57,7 @@ userController.detroy = async (req, res) => {
          data: `Deleted user with ID: ${id}`
       })
    } catch (error) {
-      res.json({ success: false })
+      res.status(500).json(responseFormat.error(500))
    }
 }
 export default userController

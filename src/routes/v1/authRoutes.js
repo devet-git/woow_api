@@ -3,8 +3,8 @@ import authValidation from "../../validations/authValidation.js"
 import authController from "../../controllers/authController.js"
 const authRoutes = new Router();
 
-authRoutes.route('/login/phone-num')
-   .post(authValidation.general, authController.phoneNumLogin)
-authRoutes.route('/signin/phone-num')
-   .post(authValidation.general, authController.phoneNumSignin)
+authRoutes.route('/sign-up/phone-num')
+   .post(authValidation.general, authController.phoneNumSignUp)
+authRoutes.route('/sign-in/phone-num')
+   .post(authValidation.general, authController.phoneNumSignIn)
 export default authRoutes
