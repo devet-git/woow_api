@@ -7,16 +7,16 @@ import { responseFormat } from '../utils/format.js'
 dotenv.config()
 
 
-const phoneNumSignin = async (reqData) => {
-   let { phoneNum, pw, realName } = reqData
+const phoneNumSignUp = async (reqData) => {
+   let { phoneNum, pw, repeatPw, realName } = reqData
    try {
       let dbData = await userModel.check(phoneNum)
 
-      if (dbData.length == 0) {
+      if (dbData.length == 0 && pw == repeatPw) {
          let salt = 11
          let hashedPw = await bcrypt.hash(pw, salt)
 
-         await userModel.insert({ real_name: realName || null, phone_num: phoneNum, pw: hashedPw })
+         await userModel.store({ real_name: realName || null, phone_num: phoneNum, pw: hashedPw })
          return responseFormat.success("Account was created")
       } else {
          return responseFormat.error(400, "Account already exists")
@@ -25,7 +25,7 @@ const phoneNumSignin = async (reqData) => {
       throw new Error(error)
    }
 }
-const phoneNumLogin = async (reqData) => {
+const phoneNumSignIn = async (reqData) => {
    let { phoneNum, pw } = reqData
    try {
       let dbData = await userModel.check(phoneNum)
@@ -44,5 +44,5 @@ const phoneNumLogin = async (reqData) => {
    }
 }
 
-const authService = { phoneNumSignin, phoneNumLogin }
+const authService = { phoneNumSignUp, phoneNumSignIn }
 export default authService

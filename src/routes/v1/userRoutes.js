@@ -5,12 +5,12 @@ import userController from "../../controllers/userController.js"
 const userRoutes = new Router();
 
 userRoutes.route('/')
-   .get(userController.index)
-   .post(userController.store)
+   .get(userController.showAll)
+   .post(userController.createNew)
 userRoutes.route('/:id')
    .get(userController.show)
    .put(userController.update)
-   .delete(userController.detroy)
+   .delete(userController.detele)
 // userRoutes.route('/:id/works')
 //    .get(userController.show)
 //    .put(userController.update)
