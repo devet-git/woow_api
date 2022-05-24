@@ -32,7 +32,7 @@ const phoneNumSignIn = async (reqData) => {
       if (dbData.length == 1) {
          let isPwMatch = await bcrypt.compare(pw, dbData[0].pw)
          if (isPwMatch) {
-            let token = jwt.sign({ userId: dbData[0].id }, process.env.SECRET_KEY, { expiresIn: 30 })
+            let token = jwt.sign({ userId: dbData[0].id, role: dbData[0].role }, process.env.SECRET_KEY, { expiresIn: 60 * 2 })
             let resData = { token, userID: dbData[0].id }
             return responseFormat.success(resData)
          }
