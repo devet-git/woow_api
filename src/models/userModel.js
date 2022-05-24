@@ -1,50 +1,45 @@
 import db from "../config/db.js"
 import model from "../config/model.js"
+import { objectString } from "../utils/genString.js"
+
 
 const userModel = Object.create(model)
 
-userModel.select = (id = null) => {
-   let sql = id ? "SELECT * FROM works WHERE id = ?" : "SELECT * FROM works"
-   let result = new Promise((resolve, reject) => {
-      db.query(sql, [id], (err, data) => {
-         if (err) reject(err)
-         resolve(data)
-      })
-   })
-   return result
+userModel.store = async (data) => {
+   try {
+      let sql = `INSERT INTO users(${objectString(data).genKeys}) VALUES(${objectString(data).genCommas})`
+      await db.execute(sql, Object.values(data))
+      return "Added new user"
+   } catch (error) {
+      throw new Error(error)
+   }
 }
 
-userModel.insert = (title) => {
-   let sql = "INSERT INTO works(title) VALUES(?)"
-   let result = new Promise((resolve, reject) => {
-      db.query(sql, [title], (err) => {
-         if (err) throw err
-         resolve("Insert user successfully!!")
-         reject("Can not insert new user!!")
-      })
-   })
-   return result
+userModel.update = async (id, field, value) => {
+   try {
+      let sql = `UPDATE users SET ${field} = ? WHERE id = ?`
+      await db.execute(sql, [value, id])
+   } catch (error) {
+      throw new Error(error)
+   }
 }
 
-userModel.update = (id, title) => {
-   let sql = "UPDATE works SET title = ? WHERE id = ?"
-   let result = new Promise((resolve, reject) => {
-      db.query(sql, [title, id], (err) => {
-         if (err) reject(err)
-         resolve(`Updated user with id ${id}`)
-      })
-   })
-   return result
+userModel.detele = async (id) => {
+   let sql = "DELETE FROM users WHERE id = ?"
+   try {
+      await db.execute(sql, [id])
+   } catch (error) {
+      throw new Error(error)
+   }
 }
 
-userModel.detele = (id) => {
-   let sql = "DELETE FROM works WHERE id = ?"
-   let result = new Promise((resolve, reject) => {
-      db.query(sql, [id], (err) => {
-         if (err) reject(err)
-         resolve(`Deleted user with id ${id}`)
-      })
-   })
-   return result
+userModel.check = async (phoneNum) => {
+   let sql = "SELECT * from users WHERE phone_num = ?"
+   try {
+      let [rows] = await db.execute(sql, [phoneNum])
+      return rows
+   } catch (error) {
+      throw new Error(error)
+   }
 }
 export default userModel

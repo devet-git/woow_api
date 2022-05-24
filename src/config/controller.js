@@ -1,8 +1,9 @@
 const controller = {
+   showAll: () => { },
    show: () => { },
-   store: () => { },
+   createNew: () => { },
    update: () => { },
-   detroy: () => { },
+   delete: () => { },
 }
 
 export default controller
