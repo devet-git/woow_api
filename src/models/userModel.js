@@ -33,10 +33,10 @@ userModel.detele = async (id) => {
    }
 }
 
-userModel.check = async (phoneNum) => {
-   let sql = "SELECT * from users WHERE phone_num = ?"
+userModel.check = async (field, value) => {
+   let sql = `SELECT * from users WHERE ${field} = ?`
    try {
-      let [rows] = await db.execute(sql, [phoneNum])
+      let [rows] = await db.execute(sql, [value])
       return rows
    } catch (error) {
       throw new Error(error)

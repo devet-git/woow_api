@@ -1,11 +1,11 @@
 import { Router } from "express"
 import workController from "../../controllers/workController.js"
 import workValidation from "../../validations/workValidation.js"
-
+import { authMiddleware } from "../../middlewares/authMiddleware.js";
 const workRoutes = new Router();
 
 workRoutes.route('/')
-   .get(workController.showAll)
+   .get(authMiddleware, workController.showAll)
    .post(workValidation.createNew, workController.createNew)
 workRoutes.route('/:id')
    .get(workController.show)

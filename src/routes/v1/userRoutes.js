@@ -1,11 +1,11 @@
 import { Router } from "express"
 import userController from "../../controllers/userController.js"
-
+import { authMiddleware } from "../../middlewares/authMiddleware.js"
 
 const userRoutes = new Router();
 
 userRoutes.route('/')
-   .get(userController.showAll)
+   .get(authMiddleware, userController.showAll)
    .post(userController.createNew)
 userRoutes.route('/:id')
    .get(userController.show)
