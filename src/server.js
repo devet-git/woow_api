@@ -2,11 +2,14 @@ import express from "express"
 import dotenv from "dotenv"
 import APIv1 from './routes/v1/index.js'
 import notFoundRouter from "./routes/v1/notFound.js"
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
 const app = express()
 const port = process.env.SERVER_PORT;
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/api/v1', APIv1)
