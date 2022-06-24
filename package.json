@@ -6,8 +6,10 @@
    "type": "module",
    "scripts": {
       "eslint": "eslint src",
-      "dev": "nodemon  ./src/server.js",
-      "prod": "node ./src/server.js"
+      "dev": "cross-env NODE_ENV=development sapper dev",
+      "build": "vercel build --output public",
+      "export": "sapper export --legacy",
+      "start": "node __sapper__/build"
    },
    "author": "devet",
    "license": "ISC",

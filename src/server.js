@@ -15,3 +15,4 @@ app.use('/api/v1', APIv1)
 app.use(notFoundRouter)
 
 app.listen(port, () => console.log(`Server started at port ${port}`))
+export default app
