@@ -5,7 +5,7 @@ import notFoundRouter from "./routes/v1/notFound.js"
 import cors from 'cors'
 
 dotenv.config()
-const app = (module.exports = express())
+const app = express()
 const port = process.env.PORT || 3000
 
 app.use(cors())
@@ -14,4 +14,5 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/v1', APIv1)
 app.use(notFoundRouter)
 
-app.listen(port, () => console.log(`Server started at port ${port}`))
+app.listen(port, () => console.log(`Server started at http://localhost:${port}`))
+export default app
